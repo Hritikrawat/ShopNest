@@ -57,7 +57,7 @@ export default function Navbar() {
 
       
     </div>
-        <div className='mt-2 w-full h-10 bg-purple-400 flex justify-center items-center space-x-4'>
+        <div className='mt-2 w-full h-10 bg-purple-400 flex justify-center items-center space-x-2'>
         <input type="search" placeholder='Search products'
          className='p-4 bg-purple-100 w-1/3 h-[70%] rounded-full hover:scale-105 focus:bg-white focus:scale-105 transform transition-all duration-500 ' 
          />
