@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Navbar from './Navbar'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import { getProducts } from '../Url';
+import { getProducts } from './Url'
 import Footer from './Footer';
 
 export default function Home() {
@@ -13,14 +13,13 @@ export default function Home() {
   useEffect(()=>{
     getProducts().then((res)=>{
         setProducts(res.data.products);
-        console.log(res.data)
+        console.log("Product list in Home.jsx", products);
     }).catch((e)=>console.log("Error : ",e))
   },[])
 
   return (
     <div className='min-h-screen max-w-full bg-purple-400 bg-gradient-to-b from-purple-400 to-purple-200'>
         <Navbar/>
-        
         <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 w-full px-4">
             {products.map((e)=>(    
               <div key={e.id} className='bg-white rounded-2xl hover:shadow-2xl hover:scale-103 transition-all duration-300 ease-in-out p-4 '>

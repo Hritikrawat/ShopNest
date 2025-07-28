@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "./Navbar";
-import { getProducts } from "../Url";
+import { getProducts } from "./Url"
 
 export default function Category() {
   const [products, setProducts] = useState([]);
