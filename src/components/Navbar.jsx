@@ -12,6 +12,10 @@ export default function Navbar() {
   const toggleHandler=()=>{
     setToggle(perv=>!perv)
   }
+  const searchHanlder =()=>{
+    
+    alert("Clicked")
+  }
   return (
     <>
 
@@ -30,9 +34,9 @@ export default function Navbar() {
       <div className="hidden sm:block">
         <nav className="flex space-x-10 text-lg font-semibold    ">
           <Link to='/Home' className="px-3 py-1 rounded-md  hover:bg-white/30 transition-colors duration-300 ease-in-out">Home</Link>
-          <Link to='/Category' className="px-3 py-1 rounded-md  hover:bg-white/30 transition-colors duration-300 ease-in-out  ">Category</Link>
+          {/* <Link to='/Category' className="px-3 py-1 rounded-md  hover:bg-white/30 transition-colors duration-300 ease-in-out  ">Category</Link> */}
           <Link to='/Cart' className="    px-3 py-1 rounded-md  hover:bg-white/30 transition-colors duration-300 ease-in-out      ">Cart</Link>
-          <Link to='/Order' className="   px-3 py-1 rounded-md  hover:bg-white/30 transition-colors duration-300 ease-in-out     ">Orders</Link>
+          <Link to='/Orders' className="   px-3 py-1 rounded-md  hover:bg-white/30 transition-colors duration-300 ease-in-out     ">Orders</Link>
       </nav>
        
       </div>
@@ -57,14 +61,15 @@ export default function Navbar() {
 
       
     </div>
-        <div className='mt-2 w-full h-10 bg-purple-400 flex justify-center items-center space-x-4'>
+        <div className='mt-2 w-full h-10 bg-purple-400 flex justify-center items-center space-x-2'>
         <input type="search" placeholder='Search products'
          className='p-4 bg-purple-100 w-1/3 h-[70%] rounded-full hover:scale-105 focus:bg-white focus:scale-105 transform transition-all duration-500 ' 
          />
 
          <div>
-          <SearchIcon></SearchIcon>
+          <SearchIcon onClick={searchHanlder} className='cursor-pointer hover:text-gray-700 transition duration-200 ease-in-out active:scale-90'></SearchIcon>
          </div>
+
     </div>
     </>
     
