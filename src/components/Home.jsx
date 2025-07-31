@@ -22,6 +22,12 @@ export default function Home() {
       : products.filter((e) => e.category === selectedCate);
 
   useEffect(() => {
+  
+    document.documentElement.classList.toggle(
+  "dark",
+  localStorage.theme === "dark" ||
+    (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches),
+);
     getProducts()
       .then((res) => {
         setProducts(res.data.products);
@@ -32,22 +38,26 @@ export default function Home() {
 
   return (
     <div className="min-h-screen max-w-full bg-purple-400 bg-gradient-to-b from-purple-400 to-purple-200">
-      <Navbar />
-
+      <Navbar products={products} />
       {/* Category Cards */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 p-4">
+      
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 p-4 ">
+      
         {/* "All" Category Card */}
-        <div
-          onClick={() => setSelectedCate("All")}
+      
+        {/* <div
+        onClick={() => setSelectedCate("All")}
           className={`cursor-pointer p-4 rounded-xl shadow text-center bg-white hover:bg-purple-100 transition-all 
             ${
             selectedCate === "All" ? "ring-2 ring-purple-600" : ""
           }`}
         >
           <h2 className="font-bold text-purple-700">All</h2>
-        </div>
+        </div> */}
 
-        {/* Other Category Cards */}
+       
+       {/* Button of categories */}
+        
         {uniqueCate.map((cat) => (
           <div
             key={cat}
