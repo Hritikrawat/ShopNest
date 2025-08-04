@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Link } from "react-router";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import SettingsIcon from "@mui/icons-material/Settings";
 import ReorderIcon from "@mui/icons-material/Reorder";
 import Slider from "./Slider.jsx";
 import SearchIcon from "@mui/icons-material/Search";
+import RightNav from "./RightNav.jsx";
+
 
 export default function Navbar({ products }) {
   const [toggle, setToggle] = useState(false);
@@ -14,6 +14,7 @@ export default function Navbar({ products }) {
   const [suggestion, setSuggestion] = useState([]);
 
   const toggleHandler = () => {
+    console.log('clicked')
     setToggle((perv) => !perv);
   };
   const searchHanlder = () => {
@@ -36,6 +37,8 @@ export default function Navbar({ products }) {
   };
   return (
     <>
+                        
+      
       <div className="bg-purple-500  h-14 flex items-center justify-between px-6 text-white shadow-lg rounded-b-lg">
         {/* logo */}
         <div className="flex items-center space-x-2 cursor-pointer ">
@@ -48,7 +51,7 @@ export default function Navbar({ products }) {
         </div>
 
         {/* Center: Optional Title or Nav Links (Hidden on mobile) */}
-        <div className="hidden sm:block">
+        <div className="hidden md:block">
           <nav className="flex space-x-10 text-lg font-semibold    ">
             <Link
               to="/Home"
@@ -64,7 +67,7 @@ export default function Navbar({ products }) {
             </Link>
             <Link
               to="/Cart"
-              className="    px-3 py-1 rounded-md  hover:bg-white/30 transition-colors duration-300 ease-in-out      "
+              className="px-3 py-1 rounded-md  hover:bg-white/30 transition-colors duration-300 ease-in-out      "
             >
               Cart
             </Link>
@@ -78,18 +81,11 @@ export default function Navbar({ products }) {
         </div>
 
         {/* Right: My Account & Settings */}
-
-        <div className="hidden sm:flex items-center space-x-8 text-sm ">
-          <button className="hover:text-gray-300">
-            <AccountCircleIcon></AccountCircleIcon>
-          </button>
-          <button className="hover:text-gray-300">
-            <SettingsIcon />
-          </button>
-        </div>
+      <RightNav/>
+        
 
         {/* SLider menu  */}
-        <div className="inline-block sm:hidden">
+        <div className="md:hidden">
           <ReorderIcon onClick={toggleHandler} />
         </div>
 

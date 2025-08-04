@@ -7,7 +7,7 @@ export default function ProductBasedOnCate({ filteredProducts }) {
       {filteredProducts.map((product) => (
         <div
           key={product.id}
-          className="bg-white rounded-xl shadow-md p-4 hover:shadow-lg transition-all"
+          className="bg-white rounded-2xl shadow-md p-4 hover:shadow-xl hover:scale-105 transition-all duration-300 ease-in-out"
         >
           <img
             src={product.thumbnail}
@@ -18,8 +18,8 @@ export default function ProductBasedOnCate({ filteredProducts }) {
           <h3 className="text-sm  line-clamp-2">{product.description  }</h3>
           
 
-          <p className="text-black font-bold">{product.price} ₹</p>
-          <div className="flex justify-end mt-2">
+          <div className="flex justify-between ">
+          <p className="text-black font-bold mt-2">{product.price} ₹</p>
             <FavoriteBorderIcon className="text-purple-600 cursor-pointer" />
           </div>
         </div>

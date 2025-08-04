@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import { getProducts } from "./Url"
+import UnderConstruction from '../services/UnderConstruction'
 
 export default function Wishlist() {
   // const [products, setProducts] = useState([]);
@@ -18,10 +19,7 @@ export default function Wishlist() {
   return (
     <div className="min-h-screen min-w-full bg-amber-200">
         <Navbar />
-      <h2>Wishlist</h2>
-      <div>
-
-      </div>
+      <UnderConstruction/>
     </div>
   );
 }

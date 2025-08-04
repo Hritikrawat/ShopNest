@@ -3,12 +3,12 @@ import CloseIcon from '@mui/icons-material/Close';
 
 export default function Slider({toggle,setToggle}) {
   // const [toggle,setToggle] = useState(tog)
-  
+    console.log(toggle)
     return (
     <div  className={`
             fixed top-0 left-0 w-48 h-screen bg-gray-900 text-white p-4 rounded-bl-xl shadow-lg z-50
             transform transition-all duration-700 ease-in-out
-            sm:hidden
+            md:hidden
             ${toggle ? 'translate-x-0' : '-translate-x-full'}
           `}
       >
