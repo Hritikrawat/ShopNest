@@ -4,14 +4,15 @@ import Orders from "./components/Orders"
 import Cart from "./components/Cart"
 import Wishlist from "./components/Wishlist";
 import Pagenotfound from "./services/Pagenotfound";
-import { ThemeProvider } from "./context/ThemeProvider";
+import { CartContextProvider } from "./context/CartContext";
 
 
 export default function App() {
   return (
     
       
-      <ThemeProvider>
+      // <ThemeProvider>
+      <CartContextProvider>
       <Routes>
         <Route path="/" element={  <Navigate to="/home"/> } />
         <Route path="/home" element={ <Home/> } />
@@ -20,7 +21,9 @@ export default function App() {
         <Route path="/cart" element={<Cart />} />
         <Route path="*" element={<Pagenotfound/>}></Route>
       </Routes>
-      </ThemeProvider>
+      </CartContextProvider>
+      
+      // </ThemeProvider>
     
   );
 }

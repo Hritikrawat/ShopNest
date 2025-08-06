@@ -21,13 +21,11 @@ export default function Home() {
       ? products
       : products.filter((e) => e.category === selectedCate);
 
-  useEffect(() => {
+
+
   
-    document.documentElement.classList.toggle(
-  "dark",
-  localStorage.theme === "dark" ||
-    (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches),
-);
+      //Receving data (from dumy json)
+  useEffect(() => {
     getProducts()
       .then((res) => {
         setProducts(res.data.products);
@@ -36,10 +34,13 @@ export default function Home() {
       .catch((e) => console.log("Error : ", e));
   }, []);
 
+
+
+
   return (
     <div className="min-h-screen max-w-full bg-purple-400 bg-gradient-to-b from-purple-400 to-purple-200">
       <Navbar products={products} />
-      {/* Category Cards */}
+      
       
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 p-4 ">
       
@@ -55,7 +56,9 @@ export default function Home() {
           <h2 className="font-bold text-purple-700">All</h2>
         </div> */}
 
-       
+
+
+
        {/* Button of categories */}
         
         {uniqueCate.map((cat) => (

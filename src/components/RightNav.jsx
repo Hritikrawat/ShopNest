@@ -5,19 +5,20 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import ThemeContext from '../context/ThemeProvider'
 
 export default function RightNav() {
-  const {theme,toggleTheme} = useContext(ThemeContext)
-  useEffect(()=>{
-    if(theme==='dark')
-       document.documentElement.classList.add('dark');
-    else {
-      document.documentElement.classList.remove('dark');
-    }
-  },[theme])
+  // const {theme,toggleTheme} = useContext(ThemeContext)
+  // useEffect(()=>{
+  //   if(theme==='dark')
+  //      document.documentElement.classList.add('dark');
+  //   else {
+  //     document.documentElement.classList.remove('dark');
+  //   }
+  // },[theme])
 
   return (
     <div className="hidden md:flex items-center space-x-8 text-sm ">
           
-          <button className="hover:text-gray-300 " onClick={toggleTheme}>
+          {/* <button className="hover:text-gray-300 " onClick={toggleTheme}> */}
+          <button className="hover:text-gray-300 " >
             <DarkModeIcon />
           </button>
 
