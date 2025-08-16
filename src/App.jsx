@@ -5,6 +5,7 @@ import Cart from "./components/Cart"
 import Wishlist from "./components/Wishlist";
 import Pagenotfound from "./services/Pagenotfound";
 import { CartContextProvider } from "./context/CartContext";
+import { WishListContextProvider } from "./context/WishListContext";
 
 
 export default function App() {
@@ -13,6 +14,7 @@ export default function App() {
       
       // <ThemeProvider>
       <CartContextProvider>
+      <WishListContextProvider>
       <Routes>
         <Route path="/" element={  <Navigate to="/home"/> } />
         <Route path="/home" element={ <Home/> } />
@@ -21,6 +23,7 @@ export default function App() {
         <Route path="/cart" element={<Cart />} />
         <Route path="*" element={<Pagenotfound/>}></Route>
       </Routes>
+      </WishListContextProvider>
       </CartContextProvider>
       
       // </ThemeProvider>

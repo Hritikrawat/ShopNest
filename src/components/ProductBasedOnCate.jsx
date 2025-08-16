@@ -1,17 +1,33 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 // import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import CartContext from "../context/CartContext";
+import CartContext, { useCart } from "../context/CartContext";
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import { useWishList } from "../context/WishListContext";
 
 export default function ProductBasedOnCate({ filteredProducts }) 
 {  
-  const {item,setItems} = useContext(CartContext);
-  
-  const addTocart =(product)=>{
-    setItems(prev=>([...prev,product]))
+  const {addRemove, isInCart}  = useCart();
+  const {isInwishList, setRemove,set} = useWishList();
 
-  }
+  
+  // const addTocart =(product)=>{
+  //   if(addCheck)
+  //     { 
+  //       setItems(prev => prev.filter(e => e!==product)) 
+  //       setAddCheck(false)
+  //       console.log("item added and check is set to false")
+        
+  //     }
+  //     else {
+  //       setItems(prev=>([...prev,product]))
+  //       setAddCheck(true);
+  //       console.log("item added and check is set to true")
+  //     }
+
+  // }
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
       {filteredProducts.map((product) => (
@@ -33,8 +49,43 @@ export default function ProductBasedOnCate({ filteredProducts })
             </div>
 
             <div className="space-x-4">
-              <ShoppingCartOutlinedIcon className="text-purple-600 cursor-pointer" onClick={()=>addTocart(product)}/>
-              {/* <FavoriteBorderIcon className="text-purple-600 cursor-pointer" onClick={()=>{console.log("Added to wishlist: " ,product.title)}} /> */}
+              
+              {/* <ShoppingCartOutlinedIcon className="text-purple-600 cursor-pointer" onClick={()=>addRemove(product)}> */}
+              
+                {
+                  // Items added to cart or not
+                  isInCart(product)  ? (
+                  <ShoppingCartIcon 
+                    className="text-purple-600 cursor-pointer"
+                    onClick={() => addRemove(product)}
+                    />
+                  ):(
+                    <ShoppingCartOutlinedIcon className="text-purple-600 cursor-pointer"
+                    onClick={() => 
+                      addRemove(product)}/>
+                  )
+                }
+              {/* </ShoppingCartOutlinedIcon> */}
+
+
+
+
+                {/* adding items to wihslist */}
+              {
+                isInwishList(product) ? (
+                <FavoriteIcon 
+                className="text-purple-600 cursor-pointer" 
+                onClick={()=>  setRemove(product)}/>
+              ):(
+                  <FavoriteBorderIcon
+                className="text-purple-600 cursor-pointer" 
+                onClick={()=>{
+                  // console.log(product);
+                  setRemove(product)}} />
+              ) 
+              }
+
+              
             </div>
           </div>
         </div>
