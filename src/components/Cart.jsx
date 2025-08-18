@@ -1,6 +1,5 @@
 import React, { useContext, useState } from "react";
 import Navbar from "./Navbar";
-import UnderConstruction from "../services/UnderConstruction";
 import CartContext, { useCart } from "../context/CartContext";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
@@ -46,7 +45,8 @@ export default function Cart() {
               <div className="w-[40%] overflow-hidden line-clamp-4">
                 {e.title}
                 <br />
-                {e.tags[0] || " "}
+                {e.tags?.[0] || " "}
+
                 <br />
                 {e.stock > 40 ? (
                   <span className="text-green-400 font-semibold">In-stock</span>
@@ -81,15 +81,18 @@ export default function Cart() {
         </div>
 
         {/* Billing  */}
-        <div className="w-full md:w-1/3 bg-amber-100 text-purple-800 text-shadow-2xs font-bold text-center">
+  <div className="w-full md:w-1/3 bg-gradient-to-r from-purple-500 to-indigo-700 opacity-90 text-white rounded-2xl shadow-xl p-10 text-center">
+  <h1 className="text-lg md:text-xl font-semibold tracking-wide mb-2">
+    Total Amount
+  </h1>
+  <p className="text-2xl md:text-3xl font-bold">
+    ₹{(item.reduce((total, e) => total + e.quantity * e.price, 0)).toFixed(2)}
+  </p>
+  <p className="text-sm opacity-80 mt-1">
+    (Inclusive of all taxes)
+  </p>
+</div>
 
-          <h1>Total amount to be paid :</h1>
-          {
-            item.reduce((total,e)=>total+e.quantity*e.price,0)
-            
-          }
-
-        </div>
       </div>
 
       {/* <UnderConstruction/> */}

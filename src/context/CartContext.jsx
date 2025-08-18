@@ -11,25 +11,23 @@ export const CartContextProvider = ({ children }) => {
     setItems((prev) =>
       prev.some((p) => p.id === product.id)
         ? prev.filter((p) => p.id !== product.id)
-        : [...prev, {...product,quantity:1}]
+        : [...prev, { ...product, quantity: 1 }]
     );
   };
 
   // const remove
   const increaseQuantity = (id) => {
     setItems((prev) =>
-      prev.map((e) =>
-        e.id === id ? { ...e, quantity: (e.quantity) + 1 } : e
-      )
+      prev.map((e) => (e.id === id ? { ...e, quantity: e.quantity + 1 } : e))
     );
   };
 
-  const decreaseQuantity = (id) =>{
-    setItems((prev) =>
-       prev.map((e)=>
-        e.id===id ? {...e, quantity:e.quantity-1} : e
-    ));
-  }
+  const decreaseQuantity = (id) => {
+    setItems((prev) => 
+      prev.map((e) => (e.id === id ? { ...e, quantity: e.quantity - 1 } : e))
+      .filter((e)=>e.quantity>0)
+    );
+  };
 
   //checking whether
   const isInCart = (product) => {
@@ -37,7 +35,14 @@ export const CartContextProvider = ({ children }) => {
   };
   return (
     <CartContext.Provider
-      value={{ item, setItems, addRemove, isInCart, increaseQuantity,decreaseQuantity }}
+      value={{
+        item,
+        setItems,
+        addRemove,
+        isInCart,
+        increaseQuantity,
+        decreaseQuantity,
+      }}
     >
       {children}
     </CartContext.Provider>
