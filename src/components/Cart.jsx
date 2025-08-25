@@ -5,7 +5,7 @@ import CartContext, { useCart } from "../context/CartContext";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import Button from "@mui/material/Button";
-import { Fade } from "@mui/material";
+
 
 export default function Cart() {
   const { item } = useContext(CartContext);
@@ -28,31 +28,54 @@ export default function Cart() {
     };
 
     try {
-
-      //Need to learn to load scopt of razor pay and then initiate teh transaction
+      //Need to learn to load script of razor pay and then initiate the transaction
       const res = await createOrder(data);
       console.log(res.data);
       if (res.data.status === "created") {
         const options = {
           key: "rzp_test_R8p1AvFUr2L8b1",
-          amount: res.amount, // in paise
-          currency: res.currency,
-          name: "Your Company",
+          amount: res.data.amount, // in paise
+          currency: res.data.currency,
+          name: "ShawpStop",
           description: "Order Payment",
-          order_id: res.orderId, // use the returned orderId
+          order_id: res.data.id,
+
+          image:
+            "https://thumbs.dreamstime.com/b/business-letter-icon-lgoo-template-business-letter-icon-lgoo-template-124386672.jpg",
+
           handler: async function (response) {
-            // 3. Send payment details to backend for verification
-            await axios.post("/payment/verify", response);
-            alert("Payment Successful!");
+            alert("payment Successfull");
+            // alert(response.razorpay_payment_id);
+            // alert(response.razorpay_order_id);
+
+            //  3. Send payment details to backend for verification
+            //  await axios.post("/payment/verify", response);
+            // try {
+            //   alert(response.razorpay_payment_id, "Payment Successful!");
+            // } catch (error) {
+            //   console.log(error, "Inside handler");
+            // }
           },
+
           prefill: {
-            name: "Customer Name",
-            email: "customer@example.com",
-            contact: "9999999999",
+            //We recommend using the prefill parameter to auto-fill customer's contact information especially their phone number
+            name: "Gaurav Kumar", //your customer's name
+            email: "gaurav.kumar@example.com",
+            contact: "", //Provide the customer's phone number for better conversion rates
+          },
+          notes: {
+            address: "Razorpay Corporate Office",
           },
           theme: {
             color: "#3399cc",
           },
+
+          // method: {
+          //   upi: true, 
+          //   card: true,
+          //   netbanking: true,
+          //   wallet: true,
+          // },
         };
 
         // 4. Open Razorpay checkout
