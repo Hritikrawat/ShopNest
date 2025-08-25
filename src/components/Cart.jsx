@@ -1,15 +1,69 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { createOrder } from "./Url";
 import Navbar from "./Navbar";
 import CartContext, { useCart } from "../context/CartContext";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
+import Button from "@mui/material/Button";
+import { Fade } from "@mui/material";
 
 export default function Cart() {
   const { item } = useContext(CartContext);
   const [count, setCount] = useState(1);
 
-  const { toggle, increaseQuantity,decreaseQuantity } = useCart();
-  
+  const { toggle, increaseQuantity, decreaseQuantity } = useCart();
+
+  const [totalAmount, settoalAmount] = useState();
+
+  useEffect(() => {
+    settoalAmount(
+      item.reduce((amount, e) => amount + e.quantity * e.price, 0).toFixed(2)
+    );
+  }, [item]);
+
+  const handleCreateOrder = async () => {
+    const data = {
+      amount: totalAmount,
+      order_info: "",
+    };
+
+    try {
+
+      //Need to learn to load scopt of razor pay and then initiate teh transaction
+      const res = await createOrder(data);
+      console.log(res.data);
+      if (res.data.status === "created") {
+        const options = {
+          key: "rzp_test_R8p1AvFUr2L8b1",
+          amount: res.amount, // in paise
+          currency: res.currency,
+          name: "Your Company",
+          description: "Order Payment",
+          order_id: res.orderId, // use the returned orderId
+          handler: async function (response) {
+            // 3. Send payment details to backend for verification
+            await axios.post("/payment/verify", response);
+            alert("Payment Successful!");
+          },
+          prefill: {
+            name: "Customer Name",
+            email: "customer@example.com",
+            contact: "9999999999",
+          },
+          theme: {
+            color: "#3399cc",
+          },
+        };
+
+        // 4. Open Razorpay checkout
+        const rzp = new window.Razorpay(options);
+        rzp.open();
+      }
+    } catch (error) {
+      console.log("something fata", error);
+    }
+  };
+
   // const [totalAmount,settoalAmount]= useState();
   return (
     <>
@@ -60,15 +114,13 @@ export default function Cart() {
               {/* Quantity */}
               <div className="flex items-center w-[20%]">
                 <div>
-                  <button onClick={()=>increaseQuantity(e.id)}>
+                  <button onClick={() => increaseQuantity(e.id)}>
                     <AddIcon />
                   </button>
 
                   {e.quantity}
 
-                  <button
-                    onClick={() => decreaseQuantity(e.id)}
-                  >
+                  <button onClick={() => decreaseQuantity(e.id)}>
                     <RemoveIcon />
                   </button>
                 </div>
@@ -81,18 +133,39 @@ export default function Cart() {
         </div>
 
         {/* Billing  */}
-  <div className="w-full md:w-1/3 bg-gradient-to-r from-purple-500 to-indigo-700 opacity-90 text-white rounded-2xl shadow-xl p-10 text-center">
-  <h1 className="text-lg md:text-xl font-semibold tracking-wide mb-2">
-    Total Amount
-  </h1>
-  <p className="text-2xl md:text-3xl font-bold">
-    ₹{(item.reduce((total, e) => total + e.quantity * e.price, 0)).toFixed(2)}
-  </p>
-  <p className="text-sm opacity-80 mt-1">
-    (Inclusive of all taxes)
-  </p>
-</div>
+        <div className=" w-full md:w-1/3 bg-gradient-to-r from-purple-500 to-indigo-700 opacity-90 text-white rounded-2xl shadow-xl p-10">
+          {/* Left Section */}
+          <div className="flex justify-between items-center">
+            <div>
+              <h1 className="text-lg md:text-xl font-semibold ">
+                Total Amount
+              </h1>
+              <p className="text-sm opacity-80">(Inclusive of all taxes)</p>
+            </div>
 
+            {/* Right Section */}
+            <p className="text-2xl md:text-3xl font-bold">
+              {totalAmount > 0 ? totalAmount : "-"}
+            </p>
+          </div>
+
+          {totalAmount > 0 ? (
+            <Button
+              variant="contained"
+              sx={{
+                marginTop: "1rem",
+                background: "white",
+                color: "black",
+                padding: "0.6rem 2rem",
+                width: "100%",
+                fontWeight: "bold",
+              }}
+              onClick={handleCreateOrder}
+            >
+              PAY
+            </Button>
+          ) : null}
+        </div>
       </div>
 
       {/* <UnderConstruction/> */}
