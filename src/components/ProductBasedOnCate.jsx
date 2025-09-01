@@ -6,13 +6,18 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import CartContext, { useCart } from "../context/CartContext";
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { useWishList } from "../context/WishListContext";
-
+import Notification from "../utility/Notification";
 export default function ProductBasedOnCate({ filteredProducts }) 
 {  
   const {addRemove, isInCart}  = useCart();
   const {isInwishList, setRemove,set} = useWishList();
-
   
+  const [notificationMsg,setnotificationMsg] = useState(null);
+  
+  const shownotificationMsg =(message,duration = 2500)=>{
+      setnotificationMsg(message);
+      setTimeout(()=>{setnotificationMsg(null)},duration)
+  }
   // const addTocart =(product)=>{
   //   if(addCheck)
   //     { 
@@ -57,17 +62,18 @@ export default function ProductBasedOnCate({ filteredProducts })
                   isInCart(product)  ? (
                   <ShoppingCartIcon 
                     className="text-purple-600 cursor-pointer"
-                    onClick={() => addRemove(product)}
+                    onClick={() => {addRemove(product);
+                      shownotificationMsg("Removed from Cart ")
+                    }}
                     />
                   ):(
                     <ShoppingCartOutlinedIcon className="text-purple-600 cursor-pointer"
-                    onClick={() => 
-                      addRemove(product)}/>
+                    onClick={() => {
+                      addRemove(product)
+                    shownotificationMsg("Added to Cart ")}}/>
                   )
                 }
               {/* </ShoppingCartOutlinedIcon> */}
-
-
 
 
                 {/* adding items to wihslist */}
@@ -75,21 +81,27 @@ export default function ProductBasedOnCate({ filteredProducts })
                 isInwishList(product) ? (
                 <FavoriteIcon 
                 className="text-purple-600 cursor-pointer" 
-                onClick={()=>  setRemove(product)}/>
+                onClick={ () =>{
+                    setRemove(product);
+                    shownotificationMsg("Removed from Wishlist")
+                }}/>
               ):(
                   <FavoriteBorderIcon
                 className="text-purple-600 cursor-pointer" 
                 onClick={()=>{
                   // console.log(product);
-                  setRemove(product)}} />
+                  setRemove(product);
+                  shownotificationMsg("Added to Wishlist")
+                }} />
               ) 
               }
-
+              
               
             </div>
           </div>
         </div>
       ))}
+      {notificationMsg && <Notification mess={notificationMsg}/>}
     </div>
   );
 }
