@@ -79,7 +79,14 @@ export default function Cart() {
         };
 
         // 4. Open Razorpay checkout
-        const rzp = new window.Razorpay(options);
+        // const rzp = new window.Razorpay(options);
+        var rzp = new Razorpay(options);
+      
+        rzp.on('payment.failed', function (response){
+        console.log(response.error.code);
+        console.log(response.error.description);
+        alert("PaymentFailed")
+        });
         rzp.open();
       }
     } catch (error) {
