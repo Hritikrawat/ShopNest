@@ -1,5 +1,6 @@
 import React, { use, useState } from 'react'
 import CloseIcon from '@mui/icons-material/Close';
+import { Link } from 'react-router';
 
 export default function Slider({toggle,setToggle}) {
   // const [toggle,setToggle] = useState(tog)
@@ -25,10 +26,12 @@ export default function Slider({toggle,setToggle}) {
 
 
     {/* Menu Items */}
-    <nav className="space-y-2">
+    <nav className="space-y-2 ">
+      <Link to={"/home"}>Home</Link><br/>
+      <Link to={"/Cart"}>Cart</Link><br/>
+      <Link to={"/Wishlist"}>Wishlist</Link>
+      
       <a href="#" className="block hover:bg-gray-700 p-2 rounded">Home</a>
-      <a href="#" className="block hover:bg-gray-700 p-2 rounded">Category</a>
-      <a href="#" className="block hover:bg-gray-700 p-2 rounded">Cart</a>
       <a href="#" className="block hover:bg-gray-700 p-2 rounded">Orders</a>
       <a href="#" className="block hover:bg-gray-700 p-2 rounded">Setting</a>
       <a href="#" className="block hover:bg-gray-700 p-2 rounded">About</a>

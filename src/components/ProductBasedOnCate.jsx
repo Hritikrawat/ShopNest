@@ -1,30 +1,31 @@
 import React, { useContext, useState } from "react";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-// import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import CartContext, { useCart } from "../context/CartContext";
-import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import { useWishList } from "../context/WishListContext";
 import Notification from "../utility/Notification";
-export default function ProductBasedOnCate({ filteredProducts }) 
-{  
-  const {addRemove, isInCart}  = useCart();
-  const {isInwishList, setRemove,set} = useWishList();
-  
-  const [notificationMsg,setnotificationMsg] = useState(null);
-  
-  const shownotificationMsg =(message,duration = 2500)=>{
-      setnotificationMsg(message);
-      setTimeout(()=>{setnotificationMsg(null)},duration)
-  }
+
+export default function ProductBasedOnCate({ filteredProducts }) {
+  const { addRemove, isInCart } = useCart();
+  const { isInwishList, setRemove, set } = useWishList();
+
+  const [notificationMsg, setnotificationMsg] = useState(null);
+
+  const shownotificationMsg = (message, duration = 2500) => {
+    setnotificationMsg(message);
+    setTimeout(() => {
+      setnotificationMsg(null);
+    }, duration);
+  };
   // const addTocart =(product)=>{
   //   if(addCheck)
-  //     { 
-  //       setItems(prev => prev.filter(e => e!==product)) 
+  //     {
+  //       setItems(prev => prev.filter(e => e!==product))
   //       setAddCheck(false)
   //       console.log("item added and check is set to false")
-        
+
   //     }
   //     else {
   //       setItems(prev=>([...prev,product]))
@@ -54,54 +55,54 @@ export default function ProductBasedOnCate({ filteredProducts })
             </div>
 
             <div className="space-x-4">
-              
               {/* <ShoppingCartOutlinedIcon className="text-purple-600 cursor-pointer" onClick={()=>addRemove(product)}> */}
-              
-                {
-                  // Items added to cart or not
-                  isInCart(product)  ? (
-                  <ShoppingCartIcon 
+
+              {
+                // Items added to cart or not
+                isInCart(product) ? (
+                  <ShoppingCartIcon
                     className="text-purple-600 cursor-pointer"
-                    onClick={() => {addRemove(product);
-                      shownotificationMsg("Removed from Cart ")
-                    }}
-                    />
-                  ):(
-                    <ShoppingCartOutlinedIcon className="text-purple-600 cursor-pointer"
                     onClick={() => {
-                      addRemove(product)
-                    shownotificationMsg("Added to Cart ")}}/>
-                  )
-                }
+                      addRemove(product);
+                      shownotificationMsg("Removed from Cart ");
+                    }}
+                  />
+                ) : (
+                  <ShoppingCartOutlinedIcon
+                    className="text-purple-600 cursor-pointer"
+                    onClick={() => {
+                      addRemove(product);
+                      shownotificationMsg("Added to Cart ");
+                    }}
+                  />
+                )
+              }
               {/* </ShoppingCartOutlinedIcon> */}
 
-
-                {/* adding items to wihslist */}
-              {
-                isInwishList(product) ? (
-                <FavoriteIcon 
-                className="text-purple-600 cursor-pointer" 
-                onClick={ () =>{
+              {/* adding items to wihslist */}
+              {isInwishList(product) ? (
+                <FavoriteIcon
+                  className="text-purple-600 cursor-pointer"
+                  onClick={() => {
                     setRemove(product);
-                    shownotificationMsg("Removed from Wishlist")
-                }}/>
-              ):(
-                  <FavoriteBorderIcon
-                className="text-purple-600 cursor-pointer" 
-                onClick={()=>{
-                  // console.log(product);
-                  setRemove(product);
-                  shownotificationMsg("Added to Wishlist")
-                }} />
-              ) 
-              }
-              
-              
+                    shownotificationMsg("Removed from Wishlist");
+                  }}
+                />
+              ) : (
+                <FavoriteBorderIcon
+                  className="text-purple-600 cursor-pointer"
+                  onClick={() => {
+                    // console.log(product);
+                    setRemove(product);
+                    shownotificationMsg("Added to Wishlist");
+                  }}
+                />
+              )}
             </div>
           </div>
         </div>
       ))}
-      {notificationMsg && <Notification mess={notificationMsg}/>}
+      {notificationMsg && <Notification mess={notificationMsg} />}
     </div>
   );
 }

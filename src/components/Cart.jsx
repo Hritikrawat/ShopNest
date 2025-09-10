@@ -1,10 +1,16 @@
 import React, { useContext, useEffect, useState } from "react";
-import { createOrder } from "./Url";
+import { useNavigate } from "react-router";
+import { createOrder, updateOrder } from "./Url";
 import Navbar from "./Navbar";
 import CartContext, { useCart } from "../context/CartContext";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import Button from "@mui/material/Button";
+import SuccessPaymentToast from "../utility/SuccessPaymentToast";
+import FailedPaymentToast from "../utility/FailedPaymentToast";
+
+
+
 
 
 export default function Cart() {
@@ -14,7 +20,7 @@ export default function Cart() {
   const { toggle, increaseQuantity, decreaseQuantity } = useCart();
 
   const [totalAmount, settoalAmount] = useState();
-
+  const navigate = useNavigate();
   useEffect(() => {
     settoalAmount(
       item.reduce((amount, e) => amount + e.quantity * e.price, 0).toFixed(2)
@@ -28,7 +34,7 @@ export default function Cart() {
     };
 
     try {
-      //Need to learn to load script of razor pay and then initiate the transaction
+      //Need to learn, to load script of razor pay and then initiate the transaction
       const res = await createOrder(data);
       console.log(res.data);
       if (res.data.status === "created") {
@@ -43,8 +49,25 @@ export default function Cart() {
           image:
             "https://thumbs.dreamstime.com/b/business-letter-icon-lgoo-template-business-letter-icon-lgoo-template-124386672.jpg",
 
+          //payment succesfull
           handler: async function (response) {
-            alert("payment Successfull");
+            console.log("Updating Payment_Id ")
+            const res = await updateOrder({
+              paymentId: response.razorpay_payment_id,
+              orderId: response.razorpay_order_id,
+              status: "paid",
+            });
+            console.log("Payment Updated")
+            if(res.data==="Payment Successfull")
+              {  
+                <SuccessPaymentToast/>
+                navigate("/Orders");
+              }
+            else 
+                <FailedPaymentToast/>
+
+
+            // alert("payment Successfull");
             // alert(response.razorpay_payment_id);
             // alert(response.razorpay_order_id);
 
@@ -59,7 +82,7 @@ export default function Cart() {
 
           prefill: {
             //We recommend using the prefill parameter to auto-fill customer's contact information especially their phone number
-            name: "Gaurav Kumar", //your customer's name
+            name: "Ritik", //your customer's name
             email: "gaurav.kumar@example.com",
             contact: "", //Provide the customer's phone number for better conversion rates
           },
@@ -71,7 +94,7 @@ export default function Cart() {
           },
 
           // method: {
-          //   upi: true, 
+          //   upi: true,
           //   card: true,
           //   netbanking: true,
           //   wallet: true,
@@ -81,12 +104,13 @@ export default function Cart() {
         // 4. Open Razorpay checkout
         // const rzp = new window.Razorpay(options);
         var rzp = new Razorpay(options);
-      
-        rzp.on('payment.failed', function (response){
-        console.log(response.error.code);
-        console.log(response.error.description);
-        alert("PaymentFailed")
+
+        rzp.on("payment.failed", function (response) {
+          console.log(response.error.code);
+          console.log(response.error.description);
+          alert("PaymentFailed");
         });
+
         rzp.open();
       }
     } catch (error) {
