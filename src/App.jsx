@@ -6,7 +6,8 @@ import Wishlist from "./components/Wishlist";
 import Pagenotfound from "./services/Pagenotfound";
 import { CartContextProvider } from "./context/CartContext";
 import { WishListContextProvider } from "./context/WishListContext";
-
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function App() {
   return (
@@ -23,8 +24,10 @@ export default function App() {
         <Route path="/cart" element={<Cart />} />
         <Route path="*" element={<Pagenotfound/>}></Route>
       </Routes>
+      <ToastContainer />
       </WishListContextProvider>
       </CartContextProvider>
+
       
       // </ThemeProvider>
     

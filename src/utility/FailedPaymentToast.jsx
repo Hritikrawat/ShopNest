@@ -1,4 +1,4 @@
-import React from "react";
+import { toast, Bounce } from "react-toastify"; 
 
 export default function FailedPaymentToast() {
   toast.error("Something went worng but payment was successfull", {
@@ -12,19 +12,5 @@ export default function FailedPaymentToast() {
     theme: "dark",
     transition: Bounce,
   });
-  return (
-    <ToastContainer
-      position="top-center"
-      autoClose={2000}
-      hideProgressBar={false}
-      newestOnTop={false}
-      closeOnClick={false}
-      rtl={false}
-      pauseOnFocusLoss
-      draggable
-      pauseOnHover
-      theme="dark"
-      transition={Bounce}
-    />
-  );
+ 
 }

@@ -29,6 +29,9 @@ export const CartContextProvider = ({ children }) => {
     );
   };
 
+  const clearCart =()=>{
+    setItems([]);
+  }
   //checking whether
   const isInCart = (product) => {
     return item.some((e) => e.id === product.id);
@@ -42,6 +45,7 @@ export const CartContextProvider = ({ children }) => {
         isInCart,
         increaseQuantity,
         decreaseQuantity,
+        clearCart
       }}
     >
       {children}
