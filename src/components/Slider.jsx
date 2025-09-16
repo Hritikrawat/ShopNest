@@ -26,15 +26,32 @@ export default function Slider({toggle,setToggle}) {
 
 
     {/* Menu Items */}
-    <nav className="space-y-2 ">
-      <Link to={"/home"}>Home</Link><br/>
-      <Link to={"/Cart"}>Cart</Link><br/>
-      <Link to={"/Wishlist"}>Wishlist</Link>
+    <nav className="space-y-6 ">
       
-      <a href="#" className="block hover:bg-gray-700 p-2 rounded">Home</a>
+      
+
+      <div>
+      <Link to={"/home"}>Home</Link><br/>
+      </div>
+      <div>
+      <Link to={"/Cart"}>Cart</Link><br/>
+      </div>
+      <div>
+      <Link to={"/Wishlist"}>Wishlist</Link><br/>
+      </div>
+      <div>
+      <Link to={"/orders"}>Orders</Link><br/>
+      </div>
+      <div>
+      <Link to={"/Setting"}>Settings</Link><br/>
+      </div>
+      
+      {/* <Link to={"/Wishlist"}>Wishlist</Link> */}
+      
+      {/* <a href="#" className="block hover:bg-gray-700 p-2 rounded">Home</a>
       <a href="#" className="block hover:bg-gray-700 p-2 rounded">Orders</a>
       <a href="#" className="block hover:bg-gray-700 p-2 rounded">Setting</a>
-      <a href="#" className="block hover:bg-gray-700 p-2 rounded">About</a>
+      <a href="#" className="block hover:bg-gray-700 p-2 rounded">About</a> */}
     </nav>
   </div>
 )}
